@@ -1,6 +1,6 @@
 <h1>ExpNo 5 : Implement Simple Hill Climbing Algorithm</h1> 
-<h3>Name:             </h3>
-<h3>Register Number:             </h3>
+<h3>Name: LUKESH M    </h3>
+<h3>Register Number: 212224230144     </h3>
 <H3>Aim:</H3>
 <p>Implement Simple Hill Climbing Algorithm and Generate a String by Mutating a Single Character at each iteration </p>
 <h2> Theory: </h2>
@@ -39,6 +39,63 @@ Feedback is provided in terms of heuristic function
 <p> Lopp Step -2 and Step-3  until we achieve the score to be Zero to achieve Global Minima.</p>
 
 <hr>
+
+## PROGRAM
+```
+import random
+import string
+
+TARGET = "Artificial Intelligence"
+POPULATION_CHARS = string.ascii_letters + " !@#$%^&*()-_=+[]{};:'\",.<>?/\\|"
+TARGET_LEN = len(TARGET)
+
+def random_string():
+    return "".join(random.choice(POPULATION_CHARS) for _ in range(TARGET_LEN))
+
+def fitness(candidate):
+    # score = number of mismatched characters
+    return sum(1 for c, t in zip(candidate, TARGET) if c != t)
+
+def get_neighbors(candidate):
+    neighbors = []
+    for i in range(TARGET_LEN):
+        for ch in POPULATION_CHARS:
+            if ch != candidate[i]:
+                neighbor = candidate[:i] + ch + candidate[i+1:]
+                neighbors.append(neighbor)
+    return neighbors
+
+def hill_climbing():
+    current = random_string()
+    current_score = fitness(current)
+
+    while current_score > 0:
+        print(f"Score: {current_score} Solution : {current}")
+
+        neighbors = get_neighbors(current)
+        best = current
+        best_score = current_score
+
+        for n in neighbors:
+            score = fitness(n)
+            if score < best_score:
+                best = n
+                best_score = score
+
+        # stop if no improvement
+        if best_score >= current_score:
+            continue
+
+        current = best
+        current_score = best_score
+
+    print(f"Score: {current_score} Solution : {current}")
+
+
+hill_climbing()
+
+```
+
 <h2>Sample Input and Output</h2>
 <h2>Sample String:</h2> Artificial Intelligence
 <h2>Output:</h2>
@@ -59,3 +116,6 @@ Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 0  Solution :  Artificial Intelligence<br>
+
+## RESULT
+Thus the program to Generate a String by Mutating a Single Character at each iteration by implementing simple hill climbing algorithm has been executed successfully.
